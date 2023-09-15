@@ -9,7 +9,6 @@ function init(link = '') {
   return new Colyseus.Client(link);
 }
 
-const itemClient = new Colyseus.Client('ws://43.252.167.19:2567');
 async function joinOrCreate(client) {
   try {
     const responce = await client.joinOrCreate('my_room', {
