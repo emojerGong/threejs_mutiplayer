@@ -57,8 +57,6 @@ function buttonHandler() {
   if (!isBtnDisabled.value) {
     isBtnDisabled.value = true;
     buttonInfoNum.value = 1;
-    // client = init('ws://43.252.167.19:2567');
-    // client = init('ws://127.0.0.1:3000');
     client = init(inputValue.value.value.trim());
 
     connetHandler(client);
