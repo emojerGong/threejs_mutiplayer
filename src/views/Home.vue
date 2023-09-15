@@ -22,10 +22,10 @@
 </template>
 
 <script setup>
-import { RouterLink, useRouter } from "vue-router";
+import { RouterLink, useRouter } from 'vue-router';
 
 const routes = useRouter().options.routes;
-const ignoreRouteNameList = ["/", "home"];
+const ignoreRouteNameList = ['/', 'home', 'startup'];
 const filterRoutes = routes.filter(
   (route) => !ignoreRouteNameList.includes(route.name)
 );
