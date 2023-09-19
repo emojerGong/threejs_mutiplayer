@@ -23,7 +23,6 @@ import {
 } from 'vue';
 import { createCubeBase } from '@/utils/three/geometry/cube';
 import { createGridHelperBase } from '@/utils/three/floor/gridHelper';
-import { leave } from '@/utils/colyseus/main';
 
 const threeRef = ref();
 const guiRef = ref();

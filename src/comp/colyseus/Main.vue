@@ -1,11 +1,11 @@
 <template>
   <div
     id="colyseus-container"
-    class="absolute left-0 top-0 w-80 font-mono text-white flex flex-col bg-gray-500/50"
+    class="absolute left-0 bottom-0 w-80 font-mono text-white flex flex-col bg-gray-500/50 lg:bottom-auto lg:top-0"
   >
     <div class="w-full p-2 flex justify-between items-center">
       <input
-        placeholder="Colyseus_link"
+        :placeholder="placeholderInfo"
         :disabled="shouldConnetRoom"
         ref="inputValue"
         type="text"
@@ -27,6 +27,14 @@
 import { ref, computed, defineEmits } from 'vue';
 import { init, joinOrCreate } from '@/utils/colyseus/main';
 import StatusDisplay from './StatusDisplay.vue';
+import { useToast } from 'vue-toast-notification';
+
+let defaultLink = '';
+const env_d = import.meta.env;
+if (env_d?.VITE_WB_SERVER_URL) {
+  defaultLink = env_d.VITE_WB_SERVER_URL + ':' + env_d.VITE_WB_SERVER_PORT;
+}
+const placeholderInfo = defaultLink ? defaultLink : 'Colyseus_link';
 
 const buttonInfo = ['Connet', 'ing...', 'Conneted'];
 const buttonInfoNum = ref(0);
@@ -55,11 +63,22 @@ async function connetHandler(client) {
 
 function buttonHandler() {
   if (!isBtnDisabled.value) {
-    isBtnDisabled.value = true;
-    buttonInfoNum.value = 1;
-    client = init(inputValue.value.value.trim());
-
-    connetHandler(client);
+    const value = inputValue.value.value.trim();
+    if (value) {
+      isBtnDisabled.value = true;
+      buttonInfoNum.value = 1;
+      client = init(value);
+      connetHandler(client);
+    } else {
+      if (defaultLink.trim()) {
+        client = init(defaultLink);
+        connetHandler(client);
+      } else {
+        useToast().info('COLYSEUS LINK NULL! ', {
+          duration: 2000,
+        });
+      }
+    }
   }
 }
 </script>

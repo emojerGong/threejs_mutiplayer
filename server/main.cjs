@@ -3,7 +3,8 @@ const colyseus = require('colyseus');
 const cors = require('cors');
 const http = require('http');
 const express = require('express');
-const port = process.env.port || 3000;
+require('dotenv').config();
+const port = process.env.WB_SERVER_PORT || 3000;
 
 const app = express();
 app.use(express.json());
