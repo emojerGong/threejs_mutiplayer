@@ -6,10 +6,17 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "serve": "nodemon ./server/main.cjs --watch server",
+    "start": "concurrently \"npm run dev\" \"npm run serve\""
   },
   "dependencies": {
+    "colyseus": "^0.15.8",
     "colyseus.js": "^0.15.13",
+    "concurrently": "^8.2.1",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "nodemon": "^3.0.1",
     "socket.io-client": "^4.7.2",
     "three": "^0.156.1",
     "vue": "^3.3.4",
