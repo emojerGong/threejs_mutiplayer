@@ -12,6 +12,7 @@
         class="bg-transparent border-white border-2 rounded-xl px-2 focus:border-0 outline-none focus:pl-3 focus:border-transparent disabled:cursor-not-allowed"
       />
       <button
+        ref="buttonRef"
         :disabled="shouldConnetRoom"
         @click="buttonHandler"
         class="font-bold px-4 py-2 w-28 inline-flex justify-center items-center rounded-xl hover:bg-gray-500/40 disabled:hover:bg-transparent disabled:cursor-not-allowed"
@@ -25,6 +26,7 @@
 
 <script setup>
 import { ref, computed, defineEmits } from 'vue';
+import { onMounted } from 'vue';
 import { init, joinOrCreate } from '@/utils/colyseus/main';
 import StatusDisplay from './StatusDisplay.vue';
 import { useToast } from 'vue-toast-notification';
@@ -39,6 +41,7 @@ const placeholderInfo = defaultLink ? defaultLink : 'Colyseus_link';
 const buttonInfo = ['Connet', 'ing...', 'Conneted'];
 const buttonInfoNum = ref(0);
 
+const buttonRef = ref(); // 測試用
 const statusRef = ref();
 const inputValue = ref();
 const emits = defineEmits();
@@ -81,6 +84,11 @@ function buttonHandler() {
     }
   }
 }
+
+// mounted 測試用
+// onMounted(() => {
+//   buttonRef.value.click();
+// });
 </script>
 <script>
 export default {

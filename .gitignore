@@ -15,6 +15,12 @@ dist-ssr
 # dist
 dist.zip
 
+# public 3d
+public/3d/animation/*
+!public/3d/animation/.addAnimateFileHere
+public/3d/model/*
+!public/3d/model/.addModelHere
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

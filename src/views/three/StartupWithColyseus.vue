@@ -6,10 +6,11 @@
 
 <script setup>
 import * as THREE from 'three';
-
-import ThreeBase from '@/comp/three/ThreeBase.vue';
-import ColyseusMain from '@/comp/colyseus/Main.vue';
 import Control from '@/comp/gui/Control.vue';
+import ThreeBase from '@/comp/three/ThreeBase.vue';
+
+import ColyseusMain from '@/comp/colyseus/Main.vue';
+import { messageInit } from '@/utils/colyseus/message';
 
 import { useToast } from 'vue-toast-notification';
 
@@ -117,8 +118,8 @@ function roomUpdateHandler(roomValue) {
     z: myObject3DPosition.z,
   });
 
-  room.value.onMessage('player-joined', (message) => {
-    const { newPlayerId = '', players = [] } = message;
+  messageInit(room.value, 'joined', (m) => {
+    const { newPlayerId = '', players = [] } = m;
     if (room.value.sessionId !== newPlayerId) {
       useToast().success(`${newPlayerId} joined!`);
     }
@@ -129,20 +130,18 @@ function roomUpdateHandler(roomValue) {
     }
   });
 
-  room.value.onMessage('player-move', (message) => {
-    const { id = '', x = 0, z = 0 } = message;
+  messageInit(room.value, 'move', (m) => {
+    const { id = '', x = 0, z = 0 } = m;
     if (room.value.sessionId !== id) {
       updateCubePos(id, x, z);
     }
   });
-  room.value.onMessage('player-left', (message) => {
-    const { id = '' } = message;
+
+  messageInit(room.value, 'left', (m) => {
+    const { id = '' } = m;
     useToast().warning(`${id} is left!`);
     disposeCube(id);
   });
-  // room.onMessage('welcome', (client, message) => {
-  //   console.log(client.sessionId, message);
-  // });
 
   myObject3DInit();
   guiInit();

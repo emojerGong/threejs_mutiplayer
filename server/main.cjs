@@ -23,6 +23,7 @@ class MyRoom extends colyseus.Room {
         if (index >= 0) {
           this.players[index].x = message.x;
           this.players[index].z = message.z;
+          this.players[index].profile = message.profile;
         }
       } else {
         this.players.push(message);
@@ -56,13 +57,18 @@ class MyRoom extends colyseus.Room {
         z: message.z,
       });
     });
+
+    this.onMessage('player-action', (client, message) => {
+      // 广播新进来的玩家信息给其他玩家
+      this.broadcast('player-action', {
+        id: message.id,
+        action: message.action,
+      });
+    });
   }
 
   onJoin(client, options) {
     console.log('Player joined:', client.sessionId);
-
-    // 发送欢迎消息给新进来的玩家
-    this.send(client, 'welcome', 'Welcome to the room!');
   }
 
   onLeave(client, consented) {

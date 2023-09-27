@@ -25,7 +25,7 @@
 import { RouterLink, useRouter } from 'vue-router';
 
 const routes = useRouter().options.routes;
-const ignoreRouteNameList = ['/', 'home', 'startup'];
+const ignoreRouteNameList = ['/', 'home', 'startup', 'startup_with_colyseus'];
 const filterRoutes = routes.filter(
   (route) => !ignoreRouteNameList.includes(route.name)
 );
